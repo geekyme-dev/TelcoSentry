@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Churn Prediction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 900px;
+            margin-top: 40px;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .result-box textarea {
+            margin-top: 15px;
+        }
+        .card {
+            padding: 25px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card shadow">
+        <h3 class="text-center mb-4">Customer Churn Prediction</h3>
+        <form action="http://localhost:5000/" method="POST">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>SeniorCitizen</label>
+                    <textarea class="form-control" name="query1">{{query1}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>MonthlyCharges</label>
+                    <textarea class="form-control" name="query2">{{query2}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>TotalCharges</label>
+                    <textarea class="form-control" name="query3">{{query3}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>gender</label>
+                    <textarea class="form-control" name="query4">{{query4}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Partner</label>
+                    <textarea class="form-control" name="query5">{{query5}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Dependents</label>
+                    <textarea class="form-control" name="query6">{{query6}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>PhoneService</label>
+                    <textarea class="form-control" name="query7">{{query7}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>MultipleLines</label>
+                    <textarea class="form-control" name="query8">{{query8}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>InternetService</label>
+                    <textarea class="form-control" name="query9">{{query9}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>OnlineSecurity</label>
+                    <textarea class="form-control" name="query10">{{query10}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>OnlineBackup</label>
+                    <textarea class="form-control" name="query11">{{query11}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>DeviceProtection</label>
+                    <textarea class="form-control" name="query12">{{query12}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>TechSupport</label>
+                    <textarea class="form-control" name="query13">{{query13}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>StreamingTV</label>
+                    <textarea class="form-control" name="query14">{{query14}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>StreamingMovies</label>
+                    <textarea class="form-control" name="query15">{{query15}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Contract</label>
+                    <textarea class="form-control" name="query16">{{query16}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>PaperlessBilling</label>
+                    <textarea class="form-control" name="query17">{{query17}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>PaymentMethod</label>
+                    <textarea class="form-control" name="query18">{{query18}}</textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>tenure</label>
+                    <textarea class="form-control" name="query19">{{query19}}</textarea>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success px-4">SUBMIT</button>
+            </div>
+        </form>
+
+        {% if output1 or output2 %}
+        <div class="result-box mt-4">
+            <h5 class="text-center">Prediction Output</h5>
+            <textarea class="form-control" rows="2" readonly>{{output1}}</textarea>
+            <!-- <textarea class="form-control" rows="2" readonly>{{output2}}</textarea> -->
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
