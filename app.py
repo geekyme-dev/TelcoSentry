@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 import pandas as pd
@@ -7,46 +6,22 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn import metrics
 from flask import Flask, request, render_template
 import pickle
+import os  # <-- added to access environment variable for PORT
 
-app = Flask("__name__")
+app = Flask(__name__)  # <-- corrected "__name__" to __name__
 
-df_1=pd.read_csv("first_telc.csv")
+df_1 = pd.read_csv("first_telc.csv")
 
 q = ""
 
 
 @app.route("/")
 def loadPage():
-	return render_template('home.html', query="")
+    return render_template('home.html', query="")
 
 
 @app.route("/", methods=['POST'])
 def predict():
-    
-    '''
-    SeniorCitizen
-    MonthlyCharges
-    TotalCharges
-    gender
-    Partner
-    Dependents
-    PhoneService
-    MultipleLines
-    InternetService
-    OnlineSecurity
-    OnlineBackup
-    DeviceProtection
-    TechSupport
-    StreamingTV
-    StreamingMovies
-    Contract
-    PaperlessBilling
-    PaymentMethod
-    tenure
-    '''
-    
-
-    
     inputQuery1 = request.form['query1']
     inputQuery2 = request.form['query2']
     inputQuery3 = request.form['query3']
@@ -68,10 +43,8 @@ def predict():
     inputQuery19 = request.form['query19']
 
     model = pickle.load(open("model.sav", "rb"))
-    
-    expected_features = model.feature_names_in_ 
-    
- 
+    expected_features = model.feature_names_in_
+
     data = [[inputQuery1, inputQuery2, inputQuery3, inputQuery4, inputQuery5, inputQuery6, inputQuery7, 
              inputQuery8, inputQuery9, inputQuery10, inputQuery11, inputQuery12, inputQuery13, inputQuery14,
              inputQuery15, inputQuery16, inputQuery17, inputQuery18, inputQuery19]]
@@ -82,57 +55,53 @@ def predict():
                                            'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling',
                                            'PaymentMethod', 'tenure'])
     
-    df_2 = pd.concat([df_1, new_df], ignore_index = True) 
-    # Group the tenure in bins of 12 months
+    df_2 = pd.concat([df_1, new_df], ignore_index=True)
+    
     labels = ["{0} - {1}".format(i, i + 11) for i in range(1, 72, 12)]
-    
     df_2['tenure_group'] = pd.cut(df_2.tenure.astype(int), range(1, 80, 12), right=False, labels=labels)
-    #drop column customerID and tenure
-    df_2.drop(columns= ['tenure'], axis=1, inplace=True)   
-    
-    
-    
-    
-    new_df__dummies = pd.get_dummies(df_2[['gender', 'SeniorCitizen', 'Partner', 'Dependents', 'PhoneService',
-           'MultipleLines', 'InternetService', 'OnlineSecurity', 'OnlineBackup',
-           'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies',
-           'Contract', 'PaperlessBilling', 'PaymentMethod','tenure_group']])
-    
+    df_2.drop(columns=['tenure'], axis=1, inplace=True)
 
-    #final_df=pd.concat([new_df__dummies, new_dummy], axis=1)
-    # Ensure unique columns before reindexing
+    new_df__dummies = pd.get_dummies(df_2[['gender', 'SeniorCitizen', 'Partner', 'Dependents', 'PhoneService',
+                                           'MultipleLines', 'InternetService', 'OnlineSecurity', 'OnlineBackup',
+                                           'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies',
+                                           'Contract', 'PaperlessBilling', 'PaymentMethod','tenure_group']])
+
     new_df__dummies = new_df__dummies.loc[:, ~new_df__dummies.columns.duplicated()]
     new_df__dummies = new_df__dummies.reindex(columns=expected_features, fill_value=0)
-    
+
     single = model.predict(new_df__dummies.tail(1))
-    probablity = model.predict_proba(new_df__dummies.tail(1))[:,1]
-    
-    if single==1:
+    probablity = model.predict_proba(new_df__dummies.tail(1))[:, 1]
+
+    if single == 1:
         o1 = "This customer is likely to be churned!!"
-        o2 = "Confidence: {}".format(probablity*100)
+        o2 = "Confidence: {}".format(probablity * 100)
     else:
         o1 = "This customer is likely to continue!!"
-        o2 = "Confidence: {}".format(probablity*100)
-        
-    return render_template('home.html', output1=o1, output2=o2, 
-                           query1 = request.form['query1'], 
-                           query2 = request.form['query2'],
-                           query3 = request.form['query3'],
-                           query4 = request.form['query4'],
-                           query5 = request.form['query5'], 
-                           query6 = request.form['query6'], 
-                           query7 = request.form['query7'], 
-                           query8 = request.form['query8'], 
-                           query9 = request.form['query9'], 
-                           query10 = request.form['query10'], 
-                           query11 = request.form['query11'], 
-                           query12 = request.form['query12'], 
-                           query13 = request.form['query13'], 
-                           query14 = request.form['query14'], 
-                           query15 = request.form['query15'], 
-                           query16 = request.form['query16'], 
-                           query17 = request.form['query17'],
-                           query18 = request.form['query18'], 
-                           query19 = request.form['query19'])
-    
-app.run()
+        o2 = "Confidence: {}".format(probablity * 100)
+
+    return render_template('home.html', output1=o1, output2=o2,
+                           query1=inputQuery1,
+                           query2=inputQuery2,
+                           query3=inputQuery3,
+                           query4=inputQuery4,
+                           query5=inputQuery5,
+                           query6=inputQuery6,
+                           query7=inputQuery7,
+                           query8=inputQuery8,
+                           query9=inputQuery9,
+                           query10=inputQuery10,
+                           query11=inputQuery11,
+                           query12=inputQuery12,
+                           query13=inputQuery13,
+                           query14=inputQuery14,
+                           query15=inputQuery15,
+                           query16=inputQuery16,
+                           query17=inputQuery17,
+                           query18=inputQuery18,
+                           query19=inputQuery19)
+
+
+# ✅ Correct render-compatible run block
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
