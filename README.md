@@ -47,7 +47,7 @@ Telcosentry predicts whether a telecom customer will churn based on factors like
 4. Open in browser: `http://127.0.0.1:5000`  
 
 ## Click Here to Watch
-![Watch Telcosentry](https://drive.google.com/file/d/1DzdBxHG7sOuR1JoqStF4vHhhVn-teb-V/view?usp=sharing)
+![Watch Telcosentry]([https://drive.google.com/file/d/1DzdBxHG7sOuR1JoqStF4vHhhVn-teb-V/view?usp=sharing])
 
 
 ## Model Performance  
