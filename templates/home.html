@@ -4,108 +4,219 @@
     <meta charset="UTF-8">
     <title>Churn Prediction</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            max-width: 900px;
-            margin-top: 40px;
-        }
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        .result-box textarea {
-            margin-top: 15px;
-        }
-        .card {
-            padding: 25px;
-            border-radius: 10px;
-        }
-    </style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .container {
+        max-width: 900px;
+        margin-top: 40px;
+    }
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    .card {
+    position: relative;
+    padding: 25px;
+    border-radius: 10px;
+    background-color: #dff0d8;
+    z-index: 1;
+    overflow: hidden; /* Keeps watermark inside the card */
+}
+
+.card::before {
+    content: "TelcoSentry";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 7rem; /* 🔽 Reduced from 9rem to 7rem */
+    color: rgba(0, 0, 0, 0.04);
+    font-weight: 800;
+    letter-spacing: 0.2rem; /* 🔽 Reduced spacing */
+    z-index: 0;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+
+    
+    .card-header {
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.5rem;
+        background-color: transparent;
+    }
+</style>
+
+
+   
+
 </head>
 <body>
 
 <div class="container">
     <div class="card shadow">
-        <h3 class="text-center mb-4">Customer Churn Prediction</h3>
-        <form action="http://localhost:5000/" method="POST">
+        <div class="card-header">
+            Customer Churn Prediction
+        </div>
+        <form action="/" method="POST">
             <div class="row">
-                <div class="col-md-6 form-group">
+                <div class="col-12 col-md-6 form-group">
                     <label>SeniorCitizen</label>
-                    <textarea class="form-control" name="query1">{{query1}}</textarea>
+                    <select class="form-control" name="query1" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>MonthlyCharges</label>
-                    <textarea class="form-control" name="query2">{{query2}}</textarea>
+                    <input type="number" class="form-control" name="query2" placeholder="e.g. 100" required>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>TotalCharges</label>
-                    <textarea class="form-control" name="query3">{{query3}}</textarea>
+                    <input type="number" class="form-control" name="query3" placeholder="e.g. 1200" required>
                 </div>
-                <div class="col-md-6 form-group">
-                    <label>gender</label>
-                    <textarea class="form-control" name="query4">{{query4}}</textarea>
+
+                <div class="col-12 col-md-6 form-group">
+                    <label>Gender</label>
+                    <select class="form-control" name="query4" required>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>Partner</label>
-                    <textarea class="form-control" name="query5">{{query5}}</textarea>
+                    <select class="form-control" name="query5" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>Dependents</label>
-                    <textarea class="form-control" name="query6">{{query6}}</textarea>
+                    <select class="form-control" name="query6" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>PhoneService</label>
-                    <textarea class="form-control" name="query7">{{query7}}</textarea>
+                    <select class="form-control" name="query7" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>MultipleLines</label>
-                    <textarea class="form-control" name="query8">{{query8}}</textarea>
+                    <select class="form-control" name="query8" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>No phone service</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>InternetService</label>
-                    <textarea class="form-control" name="query9">{{query9}}</textarea>
+                    <select class="form-control" name="query9" required>
+                        <option>DSL</option>
+                        <option>Fiber optic</option>
+                        <option>No</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>OnlineSecurity</label>
-                    <textarea class="form-control" name="query10">{{query10}}</textarea>
+                    <select class="form-control" name="query10" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>No internet service</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>OnlineBackup</label>
-                    <textarea class="form-control" name="query11">{{query11}}</textarea>
+                    <select class="form-control" name="query11" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>No internet service</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>DeviceProtection</label>
-                    <textarea class="form-control" name="query12">{{query12}}</textarea>
+                    <select class="form-control" name="query12" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>No internet service</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>TechSupport</label>
-                    <textarea class="form-control" name="query13">{{query13}}</textarea>
+                    <select class="form-control" name="query13" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>No internet service</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>StreamingTV</label>
-                    <textarea class="form-control" name="query14">{{query14}}</textarea>
+                    <select class="form-control" name="query14" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>No internet service</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>StreamingMovies</label>
-                    <textarea class="form-control" name="query15">{{query15}}</textarea>
+                    <select class="form-control" name="query15" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>No internet service</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>Contract</label>
-                    <textarea class="form-control" name="query16">{{query16}}</textarea>
+                    <select class="form-control" name="query16" required>
+                        <option>Month-to-month</option>
+                        <option>One year</option>
+                        <option>Two years</option> <!-- ✅ Corrected -->
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>PaperlessBilling</label>
-                    <textarea class="form-control" name="query17">{{query17}}</textarea>
+                    <select class="form-control" name="query17" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
+
+                <div class="col-12 col-md-6 form-group">
                     <label>PaymentMethod</label>
-                    <textarea class="form-control" name="query18">{{query18}}</textarea>
+                    <select class="form-control" name="query18" required>
+                        <option>Electronic check</option>
+                        <option>Mailed check</option>
+                        <option>Bank transfer</option>
+                        <option>Credit card</option>
+                    </select>
                 </div>
-                <div class="col-md-6 form-group">
-                    <label>tenure</label>
-                    <textarea class="form-control" name="query19">{{query19}}</textarea>
+
+                <div class="col-12 col-md-6 form-group">
+                    <label>Tenure</label>
+                    <input type="number" class="form-control" name="query19" placeholder="e.g. 34" required>
                 </div>
             </div>
 
@@ -118,7 +229,6 @@
         <div class="result-box mt-4">
             <h5 class="text-center">Prediction Output</h5>
             <textarea class="form-control" rows="2" readonly>{{output1}}</textarea>
-            <!-- <textarea class="form-control" rows="2" readonly>{{output2}}</textarea> -->
         </div>
         {% endif %}
     </div>
