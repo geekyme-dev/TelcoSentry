@@ -7,7 +7,7 @@ Telcosentry—a savior for telecom industries where customer churn threatens pro
 Telcosentry predicts whether a telecom customer will churn based on factors like **tenure, monthly charges, contract type, online security, and more**. It leverages **Exploratory Data Analysis (EDA)** and a **Decision Tree Classifier** for accurate and interpretable predictions. Since **acquisition costs exceed retention**, this project helps businesses minimize customer churn.
 
 ## Glimpse   
-![Telcosentry UI](https://github.com/geekyme-dev/Image/issues/1#issue-3265407119)
+![Telcosentry UI](https://github.com/geekyme-dev/TelcoSentry/issues/1#issue-3265414601)
 
 
 ## Dataset  
